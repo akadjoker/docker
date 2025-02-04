@@ -1,0 +1,48 @@
+ara remover todos os contêineres (ativos e inativos):
+1️⃣ Parar todos os contêineres em execução
+
+docker stop $(docker ps -q)
+
+Isto para todos os contêineres ativos.
+2️⃣ Remover todos os contêineres (parados e ativos)
+
+docker rm -f $(docker ps -aq)
+
+O -f força a remoção caso algum contêiner esteja com erro.
+3️⃣ Remover imagens antigas 
+
+Se também quiseres limpar todas as imagens do sistema:
+
+docker rmi -f $(docker images -q)
+
+4️⃣ Remover volumes e redes Docker (opcional)
+
+Para limpar volumes não utilizados:
+
+docker volume rm $(docker volume ls -q)
+
+Para remover redes Docker criadas:
+
+docker network rm $(docker network ls -q)
+
+5️⃣ Remover tudo de uma vez (⚠️ Limpeza total)
+
+Se quiseres limpar tudo (contêineres, imagens, redes e volumes):
+
+docker system prune -a --volumes
+
+
+
+
+docker buildx ls
+
+Verifica se multiarch-builder está ativa.
+
+Inicia o suporte a multiplataforma:
+
+docker buildx create --use
+
+Reconstrói a tua imagem com suporte a ARM64:
+
+docker buildx build --platform linux/arm64 -t pi --load .
+
